@@ -1,6 +1,7 @@
 abstract final class assets_manger {
   static const String ahadesBackground = "assets/images/Hadeth Screen y.png" ;
-  static const String left_corner = "assets/images/left_corner.svg" ;
+  static const String img_bottom_decoration = "assets/images/img_bottom_decoration.png" ;
+  static const String left_corner = "assets/images/left_corner_t.png" ;
   static const String Logo = "assets/images/Logo.png" ;
   static const String qurantaps1 = "assets/images/qurantaps1.svg" ;
   static const String quran_card = "assets/images/quran_card.png" ;
@@ -9,7 +10,7 @@ abstract final class assets_manger {
   static const String qurantaps = "assets/images/qurantaps.svg" ;
   static const String radio = "assets/images/radio.svg" ;
   static const String radioBackground = "assets/images/radioBackground.png" ;
-  static const String right_corner = "assets/images/right_corner.svg" ;
+  static const String right_corner = "assets/images/right_corner_t.png" ;
   static const String sebhaBackground = "assets/images/sebhaBackground.png" ;
   static const String  siphataps= "assets/images/siphataps.svg" ;
   static const String SplashScreen = "assets/images/Splash Screen.png" ;

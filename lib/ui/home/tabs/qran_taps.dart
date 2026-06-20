@@ -9,9 +9,16 @@ import 'package:islami/ui/home/widgets/SuraWidget.dart';
 import '../../../style/constans.dart';
 import '../widgets/RecentlySuraWidget.dart';
 
-class qran_taps extends StatelessWidget {
-  const qran_taps({super.key});
+class qran_taps extends StatefulWidget {
 
+  @override
+  State<qran_taps> createState() => _qran_tapsState();
+}
+
+class _qran_tapsState extends State<qran_taps> {
+  List<SuraModel> fillterList = [];
+  String searchvalue = "" ;
+  List<SuraModel>mostRecentlyLst =[];
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -34,10 +41,17 @@ class qran_taps extends StatelessWidget {
                 Align(
                     alignment: Alignment.center,
                     child: Image.asset(assets_manger.Logo)),
+                //
                 Container(
                   height: 60,
                   margin: EdgeInsets.only(top: 15),
                   child: TextField(
+                    onChanged: (value){
+                      setState(() {
+                        searchvalue = value ;
+                        searshsura(value);
+                      });
+                    },
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
@@ -72,9 +86,11 @@ class qran_taps extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                SizedBox    (
                   height: 20,
                 ),
+                if(searchvalue.isEmpty)
+                  ...[
                 Text(
                   strings_manger.mostRecently,
                   style: TextStyle(
@@ -85,10 +101,12 @@ class qran_taps extends StatelessWidget {
                 ),
                 Expanded(
                   child: ListView.separated(
+
                     scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => RecentlySuraWidget(),
+                      itemBuilder: (context, index) => RecentlySuraWidget(
+                          suraModel: mostRecentlyLst[index]),
                       separatorBuilder: (context, index) => SizedBox(width: 10,),
-                      itemCount: 10),
+                      itemCount: mostRecentlyLst.length),
                 ),
                 Text(
                   strings_manger.suralist,
@@ -100,13 +118,26 @@ class qran_taps extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 20,
-                ),
+                ),],
                 Expanded(
                   flex: 2,
                   child: ListView.separated(
-                    itemCount: suraList.length,
+                    itemCount: searchvalue.isNotEmpty
+                        ? fillterList.length
+                        : suraList.length,
                     itemBuilder: (context, index) => SuraWidget(
-                      suraModel: suraList[index],
+                      addtorecent: (){
+                        mostRecentlyLst.insert(0, searchvalue.isNotEmpty
+                            ?fillterList[index]
+                            :suraList[index]);
+                        setState(() {
+
+                        });
+
+                      },
+                      suraModel: searchvalue.isNotEmpty
+                          ?fillterList[index]
+                          :suraList[index]
                     ),
                     separatorBuilder: (context, index) => Padding(
                       padding: EdgeInsets.symmetric(horizontal: 55),
@@ -124,4 +155,18 @@ class qran_taps extends StatelessWidget {
       ),
     );
   }
+
+  searshsura(String searchtext){
+    fillterList = [];
+    /*for(int i=0;i<suraList.length;i++){
+      if(suraList[i].)
+        fillterList.add(suraList[i]);
+    }*/
+    fillterList = suraList.where((element) =>
+    element.suraNameEn.toLowerCase().contains(searchtext.toLowerCase())
+        || element.suraNameAr.contains(searchtext)).toList();
+    print(" filllestlen : ${fillterList.length}");
+  }
+
 }
+
